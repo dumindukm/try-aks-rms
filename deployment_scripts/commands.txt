@@ -1,0 +1,20 @@
+minikube docker-env | Invoke-Expression
+
+# for web app
+
+# docker build -t rms-web:dev -f Rms.Web/Dockerfile .
+
+# docker run -it --rm -p 54344:80 -p 54443:443 --name rms-web rms-web:dev
+
+# http://localhost:54344/Tablemenu
+
+
+
+# for Gateway 
+# docker build -t rms-gateway:dev -f Rms.Gateway/Dockerfile .
+# docker run -it --rm -p 54377:80 -p 54376:443 --name rms-gateway rms-gateway:dev
+
+
+# for Product
+# docker build -t rms-product-api:dev -f Rms.ProductService/Dockerfile .
+# docker run -it --rm -p 54361:80 -p 54360:443 --name rms-product-api rms-product-api:dev

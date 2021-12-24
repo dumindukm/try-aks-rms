@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rms-gateway-deployment
+  labels:
+    app: rms-gateway
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rms-gateway
+  template:
+    metadata:
+      labels:
+        app: rms-gateway
+    spec:
+      containers:
+      - name: rms-gateway-cnt
+        image: rms-gateway:dev
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Staging
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rms-gateway-inl-svr
+spec:
+  selector:
+    app: rms-gateway
+  ports:
+    - protocol: TCP
+      port: 54377
+      targetPort: 80
+
+# kubectl apply -f rms-gateway.yaml

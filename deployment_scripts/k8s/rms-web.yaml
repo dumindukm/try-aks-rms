@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rms-web-config
+data:
+  # property-like keys; each key maps to a simple value
+  GatewayBaseUrl: http://rms-gateway-inl-svr:54377/
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rms-webapp-deployment
+  labels:
+    app: rms-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rms-web
+  template:
+    metadata:
+      labels:
+        app: rms-web
+    spec:
+      containers:
+      - name: rms-web-cnt
+        image: rms-web:dev
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        env:
+        - name: GatewayBaseUrl
+          valueFrom:
+            configMapKeyRef:
+              name: rms-web-config
+              key: GatewayBaseUrl
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rms-web-lb-svr
+spec:
+  selector:
+    app: rms-web
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 54344
+      targetPort: 80
+      nodePort: 30001
+
+# kubectl apply -f rms-web.yaml
+# to assign external IP
+# minikube service rms-web-lb-svr

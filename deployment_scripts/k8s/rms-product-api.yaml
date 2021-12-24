@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rms-product-api-deployment
+  labels:
+    app: rms-product-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rms-product-api
+  template:
+    metadata:
+      labels:
+        app: rms-product-api
+    spec:
+      containers:
+      - name: rms-product-api-cnt
+        image: rms-product-api:dev
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Staging
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rms-product-api-inl-svr
+spec:
+  selector:
+    app: rms-product-api
+  ports:
+    - protocol: TCP
+      port: 54361
+      targetPort: 80
+
+# kubectl apply -f rms-product-api.yaml

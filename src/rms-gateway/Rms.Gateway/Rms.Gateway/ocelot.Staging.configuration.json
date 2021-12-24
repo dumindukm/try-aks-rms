@@ -1,0 +1,17 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/{version}/{controller}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "rms-product-api-inl-svr",
+          "Port": 54361
+        }
+      ],
+      "UpstreamPathTemplate": "/api/{version}/w/{controller}",
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET" ]
+    }
+  ],
+  "GlobalConfiguration": { "BaseUrl": "http://rms-gateway-inl-svr:54377" }
+}

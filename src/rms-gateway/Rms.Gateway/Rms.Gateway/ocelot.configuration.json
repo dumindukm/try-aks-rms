@@ -11,6 +11,18 @@
       ],
       "UpstreamPathTemplate": "/api/{version}/w/{controller}",
       "UpstreamHttpMethod": [ "POST", "PUT", "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/{version}/{controller}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "rms-product-api-inl-svr",
+          "Port": 54361
+        }
+      ],
+      "UpstreamPathTemplate": "/api/{version}/p/{controller}",
+      "UpstreamHttpMethod": [ "POST", "PUT", "GET" ]
     }
   ],
   "GlobalConfiguration": { "BaseUrl": "https://localhost:44377" }

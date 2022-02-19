@@ -1,0 +1,30 @@
+trigger:
+- master
+
+variables:
+  buildConfiguration: 'Release'
+
+stages:
+- stage: 'Build'
+  displayName: 'Build the Web App'
+  jobs:
+  - job: 'Build'
+    displayName: 'Build Job'
+    pool:
+      vmImage: ubuntu-latest
+
+    steps:
+    #- script: dotnet build --configuration $(buildConfiguration)
+    #  displayName: 'dotnet build $(buildConfiguration)'
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore project dependencies'
+      inputs:
+        command: 'restore'
+        projects: '**/Rms.Web.csproj'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Build the project - $(buildConfiguration)'
+      inputs:
+        command: 'build'
+        arguments: '--no-restore --configuration $(buildConfiguration)'
+        projects: '**/Rms.Web.csproj'

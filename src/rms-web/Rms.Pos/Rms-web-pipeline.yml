@@ -37,6 +37,6 @@ stages:
         buildContext: $(Build.Repository.LocalPath)
         repository: $(webRepository)
         dockerfile: '$(Build.SourcesDirectory)/src/rms-web/Rms.Pos/Rms.Web/Dockerfile'
-        containerRegistry: $(dockerhub-servicecnt)
+        containerRegistry: '$(dockerhub-servicecnt)'
         tags: |
           $(tag)

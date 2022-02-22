@@ -3,7 +3,7 @@ trigger:
 
 variables:
   buildConfiguration: 'Release'
-  webRepository: 'rmssln'
+  webRepository: 'dumindukm/rmssln'
   tag: '$(Build.BuildId)'
 
 stages:

@@ -8,8 +8,9 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["Rms.Web.csproj", "Rms.Web/"]
-RUN dotnet restore "Rms.Web/Rms.Web.csproj"
 WORKDIR "/src/Rms.Web"
+RUN dotnet restore "Rms.Web.csproj"
+
 COPY . .
 
 RUN dotnet build "Rms.Web.csproj" -c Release -o /app/build

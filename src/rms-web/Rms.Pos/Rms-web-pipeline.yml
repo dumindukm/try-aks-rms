@@ -34,7 +34,7 @@ stages:
       displayName: 'Build and push the image to container registry'
       inputs:
         command: buildAndPush
-        buildContext: $(Build.Repository.LocalPath)
+        buildContext: $(Build.Repository.LocalPath)/src/rms-web/Rms.Pos/Rms.Web
         repository: $(webRepository)
         dockerfile: '$(Build.SourcesDirectory)/src/rms-web/Rms.Pos/Rms.Web/Dockerfile'
         containerRegistry: '$(dockerhub-servicecnt)'

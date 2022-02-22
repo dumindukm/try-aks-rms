@@ -7,10 +7,11 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["Rms.Web/Rms.Web.csproj", "Rms.Web/"]
+COPY ["Rms.Web.csproj", "Rms.Web/"]
 RUN dotnet restore "Rms.Web/Rms.Web.csproj"
-COPY . .
 WORKDIR "/src/Rms.Web"
+COPY . .
+
 RUN dotnet build "Rms.Web.csproj" -c Release -o /app/build
 
 FROM build AS publish

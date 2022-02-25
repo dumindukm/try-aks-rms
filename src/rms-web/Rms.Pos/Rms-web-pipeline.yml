@@ -50,7 +50,7 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     variables:
-    - group: Release
+    - group: Release-stage
     steps:
     - task: AzureWebAppContainer@1
       inputs:

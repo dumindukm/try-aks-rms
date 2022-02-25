@@ -49,8 +49,8 @@ stages:
     displayName: 'Deploy job'
     pool:
       vmImage: 'ubuntu-latest'
-    variables:
-    - group: Release-stage
+    # variables:
+    # - group: Release-stage
     steps:
     - task: AzureWebAppContainer@1
       inputs:

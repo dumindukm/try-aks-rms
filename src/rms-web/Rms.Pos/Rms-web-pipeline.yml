@@ -5,6 +5,7 @@ variables:
   buildConfiguration: 'Release'
   webRepository: 'dumindukm/rmssln'
   tag: '$(Build.BuildId)'
+  WebAppName: 'rmsweb-cnt'
 
 stages:
 - stage: 'Build'
@@ -40,3 +41,19 @@ stages:
         containerRegistry: '$(dockerhub-servicecnt)'
         tags: |
           $(tag)
+- stage: 'Deploy'
+  displayName: 'Deploy the container'
+  dependsOn: Build
+  jobs:
+  - job: 'Deploy'
+    displayName: 'Deploy job'
+    pool:
+      vmImage: 'ubuntu-latest'
+    variables:
+    - group: Release
+    steps:
+    - task: AzureWebAppContainer@1
+      inputs:
+       appName: $(WebAppName)
+       azureSubscription: '$(azsub-servicecnt)'
+       imageName: $(webRepository):$(tag)

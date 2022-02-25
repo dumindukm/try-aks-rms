@@ -55,5 +55,5 @@ stages:
     - task: AzureWebAppContainer@1
       inputs:
        appName: $(WebAppName)
-       azureSubscription: '$(azsub-servicecnt)'
+       azureSubscription: 'azsub-servicecnt'
        imageName: $(webRepository):$(tag)

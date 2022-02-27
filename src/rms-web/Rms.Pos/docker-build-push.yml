@@ -15,4 +15,4 @@ steps:
         dockerfile: '$(Build.SourcesDirectory)/${{parameters.projectPath}}/Dockerfile'
         containerRegistry: '${{ parameters.dockerhubServicecnt }}'
         tags: |
-          '${{ parameters.tag }}'
+          ${{ parameters.tag }}

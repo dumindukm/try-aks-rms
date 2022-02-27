@@ -10,9 +10,9 @@ steps:
       displayName: 'Build and push the image to container registry'
       inputs:
         command: buildAndPush
-        buildContext: $(Build.Repository.LocalPath)/${{parameters.project-path}}
-        repository: ${{parameters.webRepository}}
+        buildContext: '$(Build.Repository.LocalPath)/${{parameters.project-path}}'
+        repository: '${{parameters.webRepository}}'
         dockerfile: '$(Build.SourcesDirectory)/${{parameters.project-path}}/Dockerfile'
         containerRegistry: '${{ parameters.buildConfiguration }}'
         tags: |
-          ${{ parameters.tag }}
+          '${{ parameters.tag }}'

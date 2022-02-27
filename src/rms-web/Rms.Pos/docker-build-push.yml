@@ -1,8 +1,8 @@
 parameters:
-  - dockerhub-servicecnt: ''
-  - tag : '1'
-  - project-path: ''
-  - docker-repo: ''
+  dockerhub-servicecnt: ''
+  tag : '1'
+  project-path: ''
+  docker-repo: ''
 
 
 steps:   

@@ -1,8 +1,8 @@
 parameters:
-  dockerhub-servicecnt: ''
+  dockerhubServicecnt: ''
   tag : '1'
-  project-path: ''
-  docker-repo: ''
+  projectPath: ''
+  dockerRepo: ''
 
 
 steps:   
@@ -10,9 +10,9 @@ steps:
       displayName: 'Build and push the image to container registry'
       inputs:
         command: buildAndPush
-        buildContext: '$(Build.Repository.LocalPath)/${{parameters.project-path}}'
-        repository: '${{parameters.webRepository}}'
-        dockerfile: '$(Build.SourcesDirectory)/${{parameters.project-path}}/Dockerfile'
-        containerRegistry: '${{ parameters.buildConfiguration }}'
+        buildContext: '$(Build.Repository.LocalPath)/${{parameters.projectPath}}'
+        repository: '${{parameters.dockerRepo}}'
+        dockerfile: '$(Build.SourcesDirectory)/${{parameters.projectPath}}/Dockerfile'
+        containerRegistry: '${{ parameters.dockerhubServicecnt }}'
         tags: |
           '${{ parameters.tag }}'

@@ -31,10 +31,10 @@ stages:
     #       $(tag)
     - template: docker-build-push.yml
       parameters:
-        dockerhub-servicecnt: '$(dockerhub-servicecnt)'
+        dockerhubServicecnt: '$(dockerhub-servicecnt)'
         tag: $(tag)
-        project-path: 'src/rms-web/Rms.Pos/Rms.Web'
-        docker-repo: $(webRepository)
+        projectPath: 'src/rms-web/Rms.Pos/Rms.Web'
+        dockerRepo: $(webRepository)
 
 - stage: 'Deploy'
   displayName: 'Deploy the container'

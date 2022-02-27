@@ -19,30 +19,23 @@ stages:
       vmImage: ubuntu-latest
 
     steps:
-    #- script: dotnet build --configuration $(buildConfiguration)
-    #  displayName: 'dotnet build $(buildConfiguration)'
-    # - task: DotNetCoreCLI@2
-    #   displayName: 'Restore project dependencies'
+    # - task: Docker@2
+    #   displayName: 'Build and push the image to container registry'
     #   inputs:
-    #     command: 'restore'
-    #     projects: '**/Rms.Web.csproj'
+    #     command: buildAndPush
+    #     buildContext: $(Build.Repository.LocalPath)/src/rms-web/Rms.Pos/Rms.Web
+    #     repository: $(webRepository)
+    #     dockerfile: '$(Build.SourcesDirectory)/src/rms-web/Rms.Pos/Rms.Web/Dockerfile'
+    #     containerRegistry: '$(dockerhub-servicecnt)'
+    #     tags: |
+    #       $(tag)
+    - template: docker-build-push.yml
+      parameters:
+        dockerhub-servicecnt: '$(dockerhub-servicecnt)'
+        tag: $(tag)
+        project-path: 'src/rms-web/Rms.Pos/Rms.Web'
+        docker-repo: $(webRepository)
 
-    # - task: DotNetCoreCLI@2
-    #   displayName: 'Build the project - $(buildConfiguration)'
-    #   inputs:
-    #     command: 'build'
-    #     arguments: '--no-restore --configuration $(buildConfiguration)'
-    #     projects: '**/Rms.Web.csproj'
-    - task: Docker@2
-      displayName: 'Build and push the image to container registry'
-      inputs:
-        command: buildAndPush
-        buildContext: $(Build.Repository.LocalPath)/src/rms-web/Rms.Pos/Rms.Web
-        repository: $(webRepository)
-        dockerfile: '$(Build.SourcesDirectory)/src/rms-web/Rms.Pos/Rms.Web/Dockerfile'
-        containerRegistry: '$(dockerhub-servicecnt)'
-        tags: |
-          $(tag)
 - stage: 'Deploy'
   displayName: 'Deploy the container'
   dependsOn: Build

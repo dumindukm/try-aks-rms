@@ -30,11 +30,11 @@ stages:
     - publish: '$(Build.SourcesDirectory)/deployment_scripts/k8s'
       artifact: manifests
 
-- stage: 'prepare Deploy'
+- stage: 'Prepare_Deploy'
   displayName: 'prepare Deploy the settings'
   dependsOn: Build
   jobs:
-  - job: 'prepare-appsettings-Deploy'
+  - job: 'Prepare_appsettings_Deploy'
     displayName: 'Deploy job'
     pool:
       vmImage: 'ubuntu-latest'    

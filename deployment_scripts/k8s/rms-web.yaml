@@ -5,6 +5,8 @@ metadata:
 data:
   # property-like keys; each key maps to a simple value
   GatewayBaseUrl: http://rms-gateway-inl-svr:54377/
+#kubectl create configmap rms-web-env-config --from-literal=RUN_ENVIRONEMNT=Staging
+# kubectl create configmap json-configmap --from-file=appsettings.json
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -13,7 +15,7 @@ metadata:
   labels:
     app: rms-web
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: rms-web
@@ -29,13 +31,27 @@ spec:
         ports:
         - containerPort: 80
         env:
-        - name: GatewayBaseUrl
+        # - name: GatewayBaseUrl
+        #   valueFrom:
+        #     configMapKeyRef:
+        #       name: rms-web-config
+        #       key: GatewayBaseUrl
+        - name: ASPNETCORE_ENVIRONMENT
           valueFrom:
             configMapKeyRef:
-              name: rms-web-config
-              key: GatewayBaseUrl
-        - name: ASPNETCORE_ENVIRONMENT
-          value: Development
+              name: rms-web-env-config
+              key: RUN_ENVIRONEMNT
+        volumeMounts:
+        - name: json-config-volume
+          mountPath: /app/appsettings.json
+          subPath: appsettings.json
+      volumes:
+      - name: json-config-volume
+        configMap:
+          name: json-configmap
+          items:
+          - key: appsettings.json
+            path: appsettings.json
 ---
 apiVersion: v1
 kind: Service

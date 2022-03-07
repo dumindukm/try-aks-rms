@@ -3,3 +3,12 @@
 @{
 }
 Products
+<p>*** SITE TEXT ****  @Model.settings.SiteText</p>
+
+@{
+
+    foreach (var env in Environment.GetEnvironmentVariables().Keys)
+    {
+        <div>@env.ToString() - @Environment.GetEnvironmentVariable(env.ToString())</div>
+    }
+}

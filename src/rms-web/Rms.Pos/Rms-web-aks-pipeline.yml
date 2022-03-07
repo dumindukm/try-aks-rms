@@ -30,11 +30,11 @@ stages:
     - publish: '$(Build.SourcesDirectory)/deployment_scripts/k8s'
       artifact: manifests
 
-- stage: 'Deploy'
-  displayName: 'Deploy the container'
+- stage: 'prepare Deploy'
+  displayName: 'prepare Deploy the settings'
   dependsOn: Build
   jobs:
-  - job: 'Deploy'
+  - job: 'prepare-appsettings-Deploy'
     displayName: 'Deploy job'
     pool:
       vmImage: 'ubuntu-latest'    
@@ -50,33 +50,33 @@ stages:
           folderPath: '$(Build.ArtifactStagingDirectory)/rms-web-setting-json.zip'
           targetFiles: '**/appsettings.json'
           fileType: json
-      - deployment: Deploy
-        environment: rmsstage
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-              - download: current
-                artifact: manifests
-              - task: KubernetesManifest@0
-                displayName: Create imagePullSecret
-                inputs:
-                  action: createSecret
-                  secretName: $(imagePullSecret)
-                  dockerRegistryEndpoint: '$(dockerhub-servicecnt)'
-                  kubernetesServiceConnection: 'aks-con'
-                  namespace: 'default'
-              - task: KubernetesManifest@0
-                displayName: Deploy to Kubernetes cluster
-                inputs:
-                  action: deploy
-                  kubernetesServiceConnection: 'aks-con'
-                  namespace: 'default'
-                  manifests: |
-                    $(Pipeline.Workspace)/deployment_scripts/k8s/rms-web.yaml
-    # $(Pipeline.Workspace)/manifests/service.yml
-                  imagePullSecrets: |
-                    $(imagePullSecret)
-                  containers: |
-                    $(webRepository):$(tag)
-    # $(RegistryName)/$(leaderboardRepository):$(tag)
+  - deployment: Deploy
+    environment: rmsstage
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: manifests
+          - task: KubernetesManifest@0
+            displayName: Create imagePullSecret
+            inputs:
+              action: createSecret
+              secretName: $(imagePullSecret)
+              dockerRegistryEndpoint: '$(dockerhub-servicecnt)'
+              kubernetesServiceConnection: 'aks-con'
+              namespace: 'default'
+          - task: KubernetesManifest@0
+            displayName: Deploy to Kubernetes cluster
+            inputs:
+              action: deploy
+              kubernetesServiceConnection: 'aks-con'
+              namespace: 'default'
+              manifests: |
+                $(Pipeline.Workspace)/deployment_scripts/k8s/rms-web.yaml
+# $(Pipeline.Workspace)/manifests/service.yml
+              imagePullSecrets: |
+                $(imagePullSecret)
+              containers: |
+                $(webRepository):$(tag)
+# $(RegistryName)/$(leaderboardRepository):$(tag)

@@ -9,6 +9,7 @@ variables:
   tag: '$(Build.BuildId)'
   WebAppName: 'rmsweb-cnt'
   imagePullSecret: 'dockerToken'
+  dockerhub-servicecnt: 'dockerhub'
 
 stages:
 - stage: 'Build'

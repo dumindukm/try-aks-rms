@@ -17,7 +17,9 @@ stages:
     displayName: 'Build Job'
     pool:
       vmImage: ubuntu-latest
-
+    variables:
+      SiteText : 'site text from aks staging'
+      GatewayBaseUrl: 'http://rms-gateway-inl-svr:54377/'
     steps:
     # - task: Docker@2
     #   displayName: 'Build and push the image to container registry'
@@ -29,6 +31,12 @@ stages:
     #     containerRegistry: '$(dockerhub-servicecnt)'
     #     tags: |
     #       $(tag)
+    - task: FileTransform@1
+      displayName: 'File transformation: appsettings.json'
+      inputs:
+        folderPath: '$(Build.Repository.LocalPath)/src/rms-web/Rms.Pos/Rms.Web'
+        targetFiles: 'appsettings.json'
+        fileType: json
     - template: docker-build-push.yml
       parameters:
         dockerhubServicecnt: '$(dockerhub-servicecnt)'

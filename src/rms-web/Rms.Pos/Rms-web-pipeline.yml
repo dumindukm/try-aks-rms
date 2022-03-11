@@ -18,7 +18,7 @@ stages:
     pool:
       vmImage: ubuntu-latest
     variables:
-      SiteText : 'site text from aks staging'
+      SiteText : 'site text from file transformer to staging'
       GatewayBaseUrl: 'http://rms-gateway-inl-svr:54377/'
     steps:
     # - task: Docker@2

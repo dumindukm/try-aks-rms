@@ -69,7 +69,7 @@ stages:
               secretName: $(imagePullSecret)
               dockerRegistryEndpoint: '$(dockerhub-servicecnt)'
               kubernetesServiceConnection: 'aks-con'
-              namespace: $(k8sNamespace)
+              namespace: '$(k8sNamespace)'
           - task: KubernetesManifest@0
             displayName: Deploy to Kubernetes cluster
             inputs:

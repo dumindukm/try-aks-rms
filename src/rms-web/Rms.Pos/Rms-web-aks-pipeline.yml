@@ -49,7 +49,7 @@ stages:
         displayName: 'File transformation: appsettings.json'
         inputs:
           folderPath: '$(Build.ArtifactStagingDirectory)/rms-web-setting-json'
-          targetFiles: '**/appsettings.json'
+          targetFiles: 'appsettings.json'
           fileType: json
   - deployment: Deploy
     environment: rmsstage
@@ -74,7 +74,7 @@ stages:
               kubernetesServiceConnection: 'aks-con'
               namespace: 'default'
               manifests: |
-                $(Pipeline.Workspace)/deployment_scripts/k8s/rms-web.yaml
+                $(Pipeline.Workspace)/manifests/rms-web.yaml
 # $(Pipeline.Workspace)/manifests/service.yml
               imagePullSecrets: |
                 $(imagePullSecret)

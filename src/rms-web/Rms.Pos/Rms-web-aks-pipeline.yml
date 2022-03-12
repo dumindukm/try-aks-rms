@@ -44,7 +44,9 @@ stages:
       SiteText : 'site text from pipeline aks staging'
       GatewayBaseUrl: 'http://rms-gateway-inl-svr:54377/'
     steps:
-      - publish: '$(Build.SourcesDirectory)/src/rms-web/Rms.Pos/Rms.Web/'
+      - publish: '$(Build.SourcesDirectory)/src/rms-web/Rms.Pos/Rms.Web/appsettings.json'
+        artifact: rmswebsettingjson
+      - download: current
         artifact: rmswebsettingjson
       - task: FileTransform@1
         displayName: 'File transformation: appsettings.json'

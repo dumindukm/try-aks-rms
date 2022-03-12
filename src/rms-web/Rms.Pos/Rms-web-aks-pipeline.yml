@@ -40,7 +40,7 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'    
     variables:
-      SiteText : 'site text from aks staging'
+      SiteText : 'site text from pipeline aks staging'
       GatewayBaseUrl: 'http://rms-gateway-inl-svr:54377/'
     steps:
       - publish: '$(Build.SourcesDirectory)/src/rms-web/Rms.Pos/Rms.Web/appsettings.json'

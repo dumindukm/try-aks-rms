@@ -44,11 +44,11 @@ stages:
       GatewayBaseUrl: 'http://rms-gateway-inl-svr:54377/'
     steps:
       - publish: '$(Build.SourcesDirectory)/src/rms-web/Rms.Pos/Rms.Web/appsettings.json'
-        artifact: rms-web-setting-json
+        artifact: rmswebsettingjson
       - task: FileTransform@1
         displayName: 'File transformation: appsettings.json'
         inputs:
-          folderPath: '$(Pipeline.Workspace)/rms-web-setting-json'
+          folderPath: '$(Pipeline.Workspace)/rmswebsettingjson'
           targetFiles: 'appsettings.json'
           fileType: json
   - deployment: Deploy

@@ -10,6 +10,7 @@ variables:
   WebAppName: 'rmsweb-cnt'
   imagePullSecret: 'dockertoken'
   dockerhub-servicecnt: 'dockerhub'
+  k8sNamespace: 'rms-k8s-namespace'
 
 stages:
 - stage: 'Build'
@@ -43,7 +44,7 @@ stages:
       SiteText : 'site text from pipeline aks staging'
       GatewayBaseUrl: 'http://rms-gateway-inl-svr:54377/'
     steps:
-      - publish: '$(Build.SourcesDirectory)/src/rms-web/Rms.Pos/Rms.Web/appsettings.json'
+      - publish: '$(Build.SourcesDirectory)/src/rms-web/Rms.Pos/Rms.Web/'
         artifact: rmswebsettingjson
       - task: FileTransform@1
         displayName: 'File transformation: appsettings.json'
@@ -66,13 +67,13 @@ stages:
               secretName: $(imagePullSecret)
               dockerRegistryEndpoint: '$(dockerhub-servicecnt)'
               kubernetesServiceConnection: 'aks-con'
-              namespace: 'default'
+              namespace: $(k8sNamespace)
           - task: KubernetesManifest@0
             displayName: Deploy to Kubernetes cluster
             inputs:
               action: deploy
               kubernetesServiceConnection: 'aks-con'
-              namespace: 'default'
+              namespace: $(k8sNamespace)
               manifests: |
                 $(Pipeline.Workspace)/manifests/rms-web.yaml
 # $(Pipeline.Workspace)/manifests/service.yml

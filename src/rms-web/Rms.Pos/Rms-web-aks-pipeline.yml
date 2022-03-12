@@ -8,7 +8,7 @@ variables:
   webRepository: 'dumindukm/rmssln'
   tag: '$(Build.BuildId)'
   WebAppName: 'rmsweb-cnt'
-  imagePullSecret: 'dockerToken'
+  imagePullSecret: 'dockertoken'
   dockerhub-servicecnt: 'dockerhub'
 
 stages:
@@ -48,7 +48,7 @@ stages:
       - task: FileTransform@1
         displayName: 'File transformation: appsettings.json'
         inputs:
-          folderPath: '$(Build.ArtifactStagingDirectory)/rms-web-setting-json.zip'
+          folderPath: '$(Build.ArtifactStagingDirectory)/rms-web-setting-json'
           targetFiles: '**/appsettings.json'
           fileType: json
   - deployment: Deploy

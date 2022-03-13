@@ -63,7 +63,7 @@ stages:
         displayName: 'Copy scripts'
         inputs:
           contents: '$(Pipeline.Workspace)/rmswebsettingjson'
-          targetFolder: '$(Build.ArtifactStagingDirectory)/rmswebsettingjsontransform'
+          targetFolder: '$(Pipeline.Workspace)/rmswebsettingjsontransform'
 
       - publish: '$(Build.ArtifactStagingDirectory)/rmswebsettingjsontransform'
         displayName: 'Publish script'

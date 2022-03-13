@@ -55,10 +55,10 @@ stages:
           folderPath: '$(Pipeline.Workspace)/rmswebsettingjson'
           targetFiles: 'appsettings.json'
           fileType: json
-      # - publish: '$(Pipeline.Workspace)/rmswebsettingjson/appsettings.json'
-      #   artifact: rmswebsettingjsontransform
-      # - download: current
-      #   artifact: rmswebsettingjsontransform
+      - publish: '$(Pipeline.Workspace)/rmswebsettingjson/appsettings.json'
+        artifact: rmswebsettingjson
+      - download: current
+        artifact: rmswebsettingjson
   - deployment: Deploy
     environment: rmsstage
     strategy:

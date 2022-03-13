@@ -59,7 +59,7 @@ stages:
         artifact: rmswebsettingjsontf
       # - download: current
       #   artifact: rmswebsettingjson
-- stage : 'Deployment aks'
+- stage : 'Deployment_aks'
   displayName: 'prepare Deploy the settings'
   dependsOn: Prepare_Deploy
   jobs:

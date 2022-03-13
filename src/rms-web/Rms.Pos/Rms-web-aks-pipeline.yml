@@ -62,7 +62,7 @@ stages:
       - task: CopyFiles@2
         displayName: 'Copy scripts'
         inputs:
-          contents: '$(Pipeline.Workspace)/rmswebsettingjson'
+          contents: '$(Pipeline.Workspace)/rmswebsettingjson/appsettings.json'
           targetFolder: '$(Pipeline.Workspace)/rmswebsettingjsontransform'
 
       - publish: '$(Build.ArtifactStagingDirectory)/rmswebsettingjsontransform'

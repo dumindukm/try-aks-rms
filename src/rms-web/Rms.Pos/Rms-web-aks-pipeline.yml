@@ -78,6 +78,8 @@ stages:
               dockerRegistryEndpoint: '$(dockerhub-servicecnt)'
               kubernetesServiceConnection: 'aks-con'
               namespace: '$(k8sNamespace)'
+          - download: current
+            artifact: rmswebsettingjson
           - task: Kubernetes@1
             displayName: 'Create ConfigMap for /appsettings'
             inputs:

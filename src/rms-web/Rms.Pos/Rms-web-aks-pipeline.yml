@@ -56,11 +56,14 @@ stages:
           targetFiles: 'appsettings.json'
           fileType: json
       - publish: '$(Pipeline.Workspace)/rmswebsettingjson/appsettings.json'
-        artifact: rmswebsettingjson/$(Build.BuildId)
+        artifact: rmswebsettingjsontf
       # - download: current
       #   artifact: rmswebsettingjson
+- stage : 'Deployment aks'
+  displayName: 'prepare Deploy the settings'
+  dependsOn: Prepare_Deploy
+  jobs:
   - deployment: Deploy
-    condition: succeeded()
     environment: rmsstage
     strategy:
       runOnce:
@@ -69,7 +72,7 @@ stages:
           - download: current
             artifact: manifests
           - download: current
-            artifact: rmswebsettingjson/$(Build.BuildId)
+            artifact: rmswebsettingjsontf
           - task: KubernetesManifest@0
             displayName: kubectl create namespace
             inputs:
@@ -94,7 +97,7 @@ stages:
               namespace: '$(k8sNamespace)'
               forceUpdateConfigMap: true
               configMapName: 'json-configmap'
-              configMapArguments: '--from-file $(Pipeline.Workspace)/rmswebsettingjson/$(Build.BuildId)/appsettings.json'
+              configMapArguments: '--from-file $(Pipeline.Workspace)/rmswebsettingjsontf/appsettings.json'
           - task: Kubernetes@1
             displayName: 'Create ConfigMap for env'
             inputs:

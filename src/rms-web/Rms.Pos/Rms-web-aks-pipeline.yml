@@ -60,6 +60,7 @@ stages:
       # - download: current
       #   artifact: rmswebsettingjson
   - deployment: Deploy
+    condition: succeeded()
     environment: rmsstage
     strategy:
       runOnce:

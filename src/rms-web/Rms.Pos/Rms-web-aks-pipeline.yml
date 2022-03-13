@@ -66,6 +66,8 @@ stages:
         deploy:
           steps:
           - download: current
+            artifact: rmswebsettingjsontransform
+          - download: current
             artifact: manifests
           # - download: current
           #   artifact: rmswebsettingjsontransform

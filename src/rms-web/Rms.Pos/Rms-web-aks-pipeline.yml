@@ -62,13 +62,14 @@ stages:
           steps:
           - download: current
             artifact: manifests
-          - task: Kubernetes@1
+          - task: KubernetesManifest@0
             displayName: kubectl create namespace
             inputs:
+              action: deploy
               kubernetesServiceConnection: 'aks-con'
-              command: apply
-              useConfigurationFile: true
-              configuration: $(Pipeline.Workspace)/manifests/rms-namespace.yaml
+              namespace: $(k8sNamespace)
+              manifests: |
+                $(Pipeline.Workspace)/manifests/rms-namespace.yaml
           - task: KubernetesManifest@0
             displayName: Create imagePullSecret
             inputs:
@@ -83,7 +84,7 @@ stages:
               kubernetesServiceEndpoint: 'aks-con'
               namespace: '$(k8sNamespace)'
               forceUpdateConfigMap: true
-              configMapName: data
+              configMapName: 'json-configmap'
               configMapArguments: --from-file $(Pipeline.Workspace)/rmswebsettingjson/appsettings.json
           - task: KubernetesManifest@0
             displayName: Deploy to Kubernetes cluster

@@ -55,6 +55,8 @@ stages:
           folderPath: '$(Pipeline.Workspace)/rmswebsettingjson'
           targetFiles: 'appsettings.json'
           fileType: json
+      - publish: '$(Pipeline.Workspace)/rmswebsettingjson/appsettings.json'
+        artifact: rmswebsettingjsontransform
   - deployment: Deploy
     environment: rmsstage
     strategy:
@@ -80,7 +82,7 @@ stages:
               kubernetesServiceConnection: 'aks-con'
               namespace: '$(k8sNamespace)'
           - download: current
-            artifact: rmswebsettingjson
+            artifact: rmswebsettingjsontransform
           - task: Kubernetes@1
             displayName: 'Create ConfigMap for /appsettings'
             inputs:

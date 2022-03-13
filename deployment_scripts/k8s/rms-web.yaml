@@ -41,17 +41,17 @@ spec:
             configMapKeyRef:
               name: rms-web-env-config
               key: RUN_ENVIRONEMNT
-        # volumeMounts:
-        # - name: json-config-volume
-        #   mountPath: /app/appsettings.json
-        #   subPath: appsettings.json
-      # volumes:
-      # - name: json-config-volume
-      #   configMap:
-      #     name: json-configmap
-      #     items:
-      #     - key: appsettings.json
-      #       path: appsettings.json
+        volumeMounts:
+        - name: json-config-volume
+          mountPath: /app/appsettings.json
+          subPath: appsettings.json
+      volumes:
+      - name: json-config-volume
+        configMap:
+          name: json-configmap
+          items:
+          - key: appsettings.json
+            path: appsettings.json
 ---
 apiVersion: v1
 kind: Service

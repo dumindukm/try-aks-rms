@@ -65,6 +65,8 @@ stages:
           steps:
           - download: current
             artifact: manifests
+          - download: current
+            artifact: rmswebsettingjsontransform
           - task: KubernetesManifest@0
             displayName: kubectl create namespace
             inputs:
@@ -81,8 +83,7 @@ stages:
               dockerRegistryEndpoint: '$(dockerhub-servicecnt)'
               kubernetesServiceConnection: 'aks-con'
               namespace: '$(k8sNamespace)'
-          - download: current
-            artifact: rmswebsettingjsontransform
+          
           - task: Kubernetes@1
             displayName: 'Create ConfigMap for /appsettings'
             inputs:

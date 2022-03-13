@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
       - name: rms-web-cnt
-        image: rmssln:dev
+        image: 'dumindukm/rmssln:dev'
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80

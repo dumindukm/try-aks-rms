@@ -11,6 +11,7 @@ variables:
   imagePullSecret: 'dockertoken'
   dockerhub-servicecnt: 'dockerhub'
   k8sNamespace: 'rms-k8s-namespace'
+  aks-env : 'Staging'
 
 stages:
 - stage: 'Build'
@@ -88,6 +89,14 @@ stages:
               forceUpdateConfigMap: true
               configMapName: 'json-configmap'
               configMapArguments: --from-file $(Pipeline.Workspace)/rmswebsettingjson/appsettings.json
+          - task: Kubernetes@1
+            displayName: 'Create ConfigMap for env'
+            inputs:
+              kubernetesServiceEndpoint: 'aks-con'
+              namespace: '$(k8sNamespace)'
+              forceUpdateConfigMap: true
+              configMapName: 'rms-web-env-config'
+              configMapArguments: --from-literal=RUN_ENVIRONEMNT=$(aks-env)
           - task: KubernetesManifest@0
             displayName: Deploy to Kubernetes cluster
             inputs:

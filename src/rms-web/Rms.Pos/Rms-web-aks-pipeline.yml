@@ -59,15 +59,6 @@ stages:
       #   artifact: rmswebsettingjsontransform
       # - download: current
       #   artifact: rmswebsettingjsontransform
-      - task: CopyFiles@2
-        displayName: 'Copy scripts'
-        inputs:
-          contents: '$(Pipeline.Workspace)/rmswebsettingjson/appsettings.json'
-          targetFolder: '$(Pipeline.Workspace)/rmswebsettingjsontransform'
-
-      - publish: '$(Build.ArtifactStagingDirectory)/rmswebsettingjsontransform'
-        displayName: 'Publish script'
-        artifact: drop
   - deployment: Deploy
     environment: rmsstage
     strategy:
@@ -77,7 +68,7 @@ stages:
           - download: current
             artifact: manifests
           - download: current
-            artifact: rmswebsettingjsontransform
+            artifact: rmswebsettingjson
           - task: KubernetesManifest@0
             displayName: kubectl create namespace
             inputs:
@@ -102,7 +93,7 @@ stages:
               namespace: '$(k8sNamespace)'
               forceUpdateConfigMap: true
               configMapName: 'json-configmap'
-              configMapArguments: --from-file $(Build.ArtifactStagingDirectory)/rmswebsettingjsontransform/appsettings.json
+              configMapArguments: '--from-file $(Pipeline.Workspace)/rmswebsettingjson/appsettings.json'
           - task: Kubernetes@1
             displayName: 'Create ConfigMap for env'
             inputs:
